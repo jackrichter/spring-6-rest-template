@@ -12,20 +12,16 @@ import org.springframework.web.client.RestTemplate;
 @RequiredArgsConstructor
 public class BeerClientImpl implements BeerClient {
 
-//    private final RestTemplateBuilder restTemplateBuilder;
+    private final RestTemplateBuilder restTemplateBuilder;
 
     @Override
     public Page<BeerDTO> listBeers() {
+        RestTemplate restTemplate = restTemplateBuilder.build();
 
+        ResponseEntity<String> stringResponse =
+                restTemplate.getForEntity("http://localhost:8080/api/v1/beer", String.class);
 
-
-
-//        RestTemplate restTemplate = restTemplateBuilder.build();
-//
-//        ResponseEntity<String> stringResponse =
-//                restTemplate.getForEntity("http://localhost:8080/api/v1/beer", String.class);
-//
-//        System.out.println(stringResponse.getBody());
+        System.out.println(stringResponse.getBody());
 
         return null;
     }
