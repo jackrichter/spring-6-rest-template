@@ -1,14 +1,13 @@
 package guru.springframework.spring7resttemplate.client;
 
 import guru.springframework.spring7resttemplate.model.BeerDTO;
+import guru.springframework.spring7resttemplate.model.BeerDTOPageImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.restclient.RestTemplateBuilder;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-
-import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -23,13 +22,8 @@ public class BeerClientImpl implements BeerClient {
     public Page<BeerDTO> listBeers() {
         RestTemplate restTemplate = restTemplateBuilder.build();
 
-        ResponseEntity<String> stringResponse =
-                restTemplate.getForEntity(BASE_URL + GET_BEER_PATH, String.class);
-
-        ResponseEntity<Map> mapResponse =
-                restTemplate.getForEntity(BASE_URL + GET_BEER_PATH, Map.class);
-
-        System.out.println(stringResponse.getBody());
+        ResponseEntity<BeerDTOPageImpl> stringResponse =
+                restTemplate.getForEntity(BASE_URL + GET_BEER_PATH, BeerDTOPageImpl.class);
 
         return null;
     }
