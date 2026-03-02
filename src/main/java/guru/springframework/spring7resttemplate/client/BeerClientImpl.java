@@ -4,7 +4,7 @@ import guru.springframework.spring7resttemplate.model.BeerDTO;
 import guru.springframework.spring7resttemplate.model.BeerDTOPageImpl;
 import guru.springframework.spring7resttemplate.model.BeerStyle;
 import lombok.RequiredArgsConstructor;
-import org.springframework.boot.restclient.RestTemplateBuilder;
+import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
