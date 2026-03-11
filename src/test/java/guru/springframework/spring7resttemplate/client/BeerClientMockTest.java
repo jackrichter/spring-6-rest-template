@@ -26,8 +26,7 @@ import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.client.match.MockRestRequestMatchers.method;
-import static org.springframework.test.web.client.match.MockRestRequestMatchers.requestTo;
+import static org.springframework.test.web.client.match.MockRestRequestMatchers.*;
 import static org.springframework.test.web.client.response.MockRestResponseCreators.withSuccess;
 
 
@@ -59,6 +58,20 @@ public class BeerClientMockTest {
     }
 
     @Test
+    void  testGetById() throws JsonProcessingException {
+        BeerDTO dto = getBeerDto();
+
+        String response = objectMapper.writeValueAsString(dto);
+
+        server.expect(method(HttpMethod.GET))
+                .andExpect(requestToUriTemplate(URL + BeerClientImpl.GET_BEER_BY_ID_PATH, dto.getId()))
+                .andRespond(withSuccess(response, MediaType.APPLICATION_JSON));
+
+        BeerDTO responseDTO = beerClient.getBeerById(dto.getId());
+        assertThat(responseDTO.getId()).isEqualTo(dto.getId());
+    }
+
+    @Test
     void testListBeers() throws JsonProcessingException {
 
         String payload = objectMapper.writeValueAsString(getPage());
@@ -77,7 +90,7 @@ public class BeerClientMockTest {
                 .price(new BigDecimal("10.99"))
                 .beerName("Mango Bobs")
                 .beerStyle(BeerStyle.IPA)
-                .quantityOnHand(500)
+                .quantityOnHand(Integer.valueOf(500))
                 .upc("123245")
                 .build();
     }
